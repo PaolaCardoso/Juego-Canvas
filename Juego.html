@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Proyecto</title>
+	</head>
+	<body>
+		<canvas id="area" width="480" height="480">Tu navegador no soporta canvas u.y</canvas>
+		<button id="boton">Jugar</button>
+		<button id="arriba">Arriba</button>
+		<button id="abajo">Abajo</button>
+		<button id="izquierda">Izquierda</button>
+		<button id="derecha">Derecha</button>
+		<script>
+			var miCanvas=document.getElementById("area");
+			var ctx=miCanvas.getContext("2d");
+			var Steve=new Image();
+			var Fondo=new Image();
+			var a=40;
+			var b=400;
+			Steve.src="Stevie.png";
+			Fondo.src="Spritesheet.PNG";
+			function fondo()
+			{ 
+				for(var y=0;y<480;y+=40)
+				{
+					for(var x=0;x<480;x+=40)
+						ctx.drawImage(Fondo,160,0,80,80,x,y,40,40);
+				}
+				ctx.drawImage(Fondo,320,0,80,80,400,40,40,40);
+			};
+			function borde()
+			{
+				for(x=0;x<480;x+=40)
+				{
+					ctx.drawImage(Fondo,80,160,80,80,x,440,40,40);
+					ctx.drawImage(Fondo,80,160,80,80,x,0,40,40);
+					ctx.drawImage(Fondo,80,160,80,80,440,x,40,40);
+					ctx.drawImage(Fondo,80,160,80,80,0,x,40,40);
+				}
+			};
+			function mono()
+			{
+				ctx.drawImage(Steve,a,b,19,40);
+			};
+			function mientras()
+			{
+				for(var y=0;y<480;y+=40)
+				{
+					for(var x=0;x<480;x+=40)
+						ctx.drawImage(Fondo,0,160,80,80,x,y,40,40);
+				}
+			}
+			function TNTh(x) { 
+				var num=0; 
+				var dis=40; 
+				var flag=true; 
+				var max=10
+				if(x==40)
+					max=9
+				var inter = setInterval(function () { 
+					//ctx.clearRect(dis,40,40,40); 
+					ctx.drawImage(Fondo,80,80,80,80,dis,x,40,40); 
+					if(dis==a&&x===b){
+							a=40;
+							b=400;
+							mono();
+							}
+					if(flag==true) { 
+						if(num>0&&num<max)
+							ctx.drawImage(Fondo,160,0,80,80,dis-40,x,40,40); 
+						num++; 
+						if(num>0&&num<max) 
+							dis+=40; 
+						if(num>max) 
+							flag=false; 
+					} 
+					if(flag==false) { 
+						if(num>0&&num<max) 
+						ctx.drawImage(Fondo,160,0,80,80,dis+40,x,40,40); 
+						num--; 
+						if(num>0&&num<max) 
+							dis-=40; 
+						if(num<0) 
+							flag=true; 
+					} 
+				},200); 
+			}; 
+			function TNThinv(x) { 
+				var num=10; 
+				var dis=400; 
+				var flag=false; 
+				var max=10
+				if(x==400)
+					max=9;
+				var inter = setInterval(function () { 
+					//ctx.clearRect(dis,40,40,40); 
+					ctx.drawImage(Fondo,80,80,80,80,dis,x,40,40); 
+					if(dis==a&&x===b){
+							a=40;
+							b=400;
+							mono();
+							}
+					if(flag==true) { 
+						if(num>0&&num<max)
+							ctx.drawImage(Fondo,160,0,80,80,dis-40,x,40,40); 
+						num++; 
+						if(num>0&&num<max) 
+							dis+=40; 
+						if(num>max) 
+							flag=false; 
+					} 
+					if(flag==false) { 
+						if(num>0&&num<max) 
+						ctx.drawImage(Fondo,160,0,80,80,dis+40,x,40,40); 
+						num--; 
+						if(num>0&&num<max) 
+							dis-=40; 
+						if(num<0) 
+							flag=true; 
+					} 
+				},200); 
+			};
+			function TNTv(y) { 
+				var num=0; 
+				var dis=40; 
+				var min=0;
+				if(y==400){
+					dis=80;
+					min=1;
+					num=1;}
+				var flag=true; 
+				var inter = setInterval(function () { 
+					//ctx.clearRect(dis,40,40,40); 
+					ctx.drawImage(Fondo,80,80,80,80,y,dis,40,40); 
+					if(dis==b&&y===a){
+							a=40;
+							b=400;
+							mono();
+						}
+					if(flag==true) { 
+						if(num>min&&num<10) 
+							ctx.drawImage(Fondo,160,0,80,80,y,dis-40,40,40); 
+							num++; 
+						if(num>min&&num<10) 
+							dis+=40; 
+							if(num>10) 
+								flag=false; 
+					} 
+					if(flag==false) { 
+						if(num>min&&num<10) 
+							ctx.drawImage(Fondo,160,0,80,80,y,dis+40,40,40); 
+							num--; 
+							if(num>min&&num<10) 
+								dis-=40; 
+								if(num<min) 
+									flag=true; 
+					} 
+				},200);
+			};
+			mientras();
+			document.getElementById("boton").addEventListener("click",function()
+			{
+				fondo();
+				borde();
+				mono();
+				TNTh(40);
+				TNTh(120);
+				TNTh(200);
+				TNTh(280);
+				TNTh(360);
+				TNThinv(80);
+				TNThinv(160);
+				TNThinv(240);
+				TNThinv(320);
+				TNThinv(400);
+			});
+				document.getElementById("arriba").addEventListener("click",function()
+				{
+					if(b!=40)
+					{
+						b-=40;
+						fondo();
+						borde();
+						//funcion nivel
+						//obstaculos
+						ctx.drawImage(Steve,a,b,19,40);
+					}
+				});
+			document.getElementById("abajo").addEventListener("click",function()
+			{
+				if(b!=400)
+				{
+					b+=40;
+					fondo();
+					borde();
+					//funcion nivel
+					//obstaculos
+					ctx.drawImage(Steve,a,b,19,40);
+				}
+			});
+			document.getElementById("derecha").addEventListener("click",function()
+			{
+				if(a!=400)
+				{
+					a+=40;
+					fondo();
+					borde();
+					//funcion nivel
+					//obstaculos
+					ctx.drawImage(Steve,a,b,19,40);
+				}
+			});
+			document.getElementById("izquierda").addEventListener("click",function()
+			{
+				if(a!=40)
+				{
+					a-=40;
+					fondo();
+					borde();
+					//funcion nivel
+					//obstaculos
+					ctx.drawImage(Steve,a,b,19,40);
+				}
+			});
+			
+		</script>
+	</body>
+</html>
