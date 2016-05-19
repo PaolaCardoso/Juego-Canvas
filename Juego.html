@@ -6,11 +6,12 @@
 	</head>
 	<body>
 		<canvas id="area" width="480" height="480">Tu navegador no soporta canvas u.y</canvas>
-		<button id="boton">Jugar</button>
+		<button id="boton" onClick="desactiva_enlace(this)" >Jugar</button>
 		<button id="arriba">Arriba</button>
 		<button id="abajo">Abajo</button>
 		<button id="izquierda">Izquierda</button>
 		<button id="derecha">Derecha</button>
+		
 		<script>
 			var miCanvas=document.getElementById("area");
 			var ctx=miCanvas.getContext("2d");
@@ -20,6 +21,10 @@
 			var b=400;
 			Steve.src="Stevie.png";
 			Fondo.src="Spritesheet.PNG";
+			function desactiva_enlace(enlace)
+			{
+				enlace.disabled='disabled';
+			}
 			function fondo()
 			{ 
 				for(var y=0;y<480;y+=40)
